@@ -7,7 +7,7 @@ Pod::Spec.new do |tapResponderChainInputView|
     tapResponderChainInputView.name = 'TapResponderChainInputView'
     tapResponderChainInputView.summary = 'Responder Chain Input View (with arrows to show above the keyboard).'
     tapResponderChainInputView.requires_arc = true
-    tapResponderChainInputView.version = '1.0'
+    tapResponderChainInputView.version = '1.1'
     tapResponderChainInputView.license = { :type => 'MIT', :file => 'LICENSE' }
     tapResponderChainInputView.author = { 'Tap Payments' => 'hello@tap.company' }
     tapResponderChainInputView.homepage = 'https://github.com/Tap-Payments/TapResponderChainInputView-iOS'

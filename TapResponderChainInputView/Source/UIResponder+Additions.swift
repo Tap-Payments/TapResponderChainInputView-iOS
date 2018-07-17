@@ -5,19 +5,26 @@
 //  Copyright © 2018 Tap Payments. All rights reserved.
 //
 
-import struct CoreGraphics.CGGeometry.CGPoint
-import struct CoreGraphics.CGGeometry.CGRect
-import struct CoreGraphics.CGGeometry.CGSize
-import class UIKit.UIResponder.UIResponder
-import class UIKit.UIScreen.UIScreen
-import class UIKit.UITextField.UITextField
+import struct   CoreGraphics.CGGeometry.CGPoint
+import struct   CoreGraphics.CGGeometry.CGRect
+import struct   CoreGraphics.CGGeometry.CGSize
+import struct   TapAdditionsKit.TypeAlias
+import class    UIKit.UIResponder.UIResponder
+import class    UIKit.UIScreen.UIScreen
+import class    UIKit.UITextField.UITextField
 
-private var previousFieldHandle: UInt8 = 0
-private var nextFieldHandle: UInt8 = 0
+private var previousFieldHandle:        UInt8 = 0
+private var nextFieldHandle:            UInt8 = 0
+
+private var manualPreviousButtonHandle: UInt8 = 0
+private var manualNextButtonHandle:     UInt8 = 0
 
 public extension UIResponder {
     
     // MARK: - Public -
+    
+    public typealias PreparationsClosure = (@escaping TypeAlias.ArgumentlessClosure) -> Void
+    
     // MARK: Properties
     
     /// Previous field in navigation chain.
@@ -26,8 +33,8 @@ public extension UIResponder {
         get {
             
             return objc_getAssociatedObject(self, &previousFieldHandle) as? UIResponder
-        }
-        set {
+            
+        } set {
             
             let changed = (newValue != nil) || ((self.previousField != nil) && (newValue == nil))
             
@@ -57,6 +64,30 @@ public extension UIResponder {
                 
                 self.initToolbar()
             }
+        }
+    }
+    
+    public var manualToolbarPreviousButtonHandler: TypeAlias.ArgumentlessClosure? {
+        
+        get {
+            
+            return objc_getAssociatedObject(self, &manualPreviousButtonHandle) as? TypeAlias.ArgumentlessClosure
+        }
+        set {
+            
+            objc_setAssociatedObject(self, &manualPreviousButtonHandle, newValue, .OBJC_ASSOCIATION_RETAIN)
+        }
+    }
+    
+    public var manualToolbarNextButtonHandler: TypeAlias.ArgumentlessClosure? {
+        
+        get {
+            
+            return objc_getAssociatedObject(self, &manualNextButtonHandle) as? TypeAlias.ArgumentlessClosure
+        }
+        set {
+            
+            objc_setAssociatedObject(self, &manualNextButtonHandle, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
     
@@ -98,7 +129,11 @@ extension UIResponder: TapResponderChainInputViewDelegate {
     
     internal func responderChainInputViewPreviousButtonClicked(_ responderChainInputView: TapResponderChainInputView) {
         
-        DispatchQueue.main.async {
+        if let nonnullPreviousClickHandler = self.manualToolbarPreviousButtonHandler {
+            
+            nonnullPreviousClickHandler()
+        }
+        else {
             
             self.previousField?.becomeFirstResponder()
         }
@@ -106,7 +141,11 @@ extension UIResponder: TapResponderChainInputViewDelegate {
     
     internal func responderChainInputViewNextButtonClicked(_ responderChainInputView: TapResponderChainInputView) {
         
-        DispatchQueue.main.async {
+        if let nonnullNextClickHandler = self.manualToolbarNextButtonHandler {
+            
+            nonnullNextClickHandler()
+        }
+        else {
             
             self.nextField?.becomeFirstResponder()
         }
