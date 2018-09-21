@@ -32,14 +32,16 @@ public class TapResponderChainInputView: TapNibInputView {
         }
     }
    
-    open override class var bundle: Bundle {
-        
+    public override class var bundle: Bundle {
+
         return .responderChainInputViewResourcesBundle
     }
     
     // MARK: Methods
    
     public override func setup() {
+        
+        super.setup()
         
         TapResponderChainInputView.aliveInstances.append(self)
         self.applyAllGlobalSettings()
