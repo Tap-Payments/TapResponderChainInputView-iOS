@@ -2,7 +2,7 @@
 //  UIResponder+Additions.swift
 //  TapResponderChainInputView
 //
-//  Copyright © 2018 Tap Payments. All rights reserved.
+//  Copyright © 2019 Tap Payments. All rights reserved.
 //
 
 import struct   CoreGraphics.CGGeometry.CGPoint
@@ -13,11 +13,11 @@ import class    UIKit.UIResponder.UIResponder
 import class    UIKit.UIScreen.UIScreen
 import class    UIKit.UITextField.UITextField
 
-private var previousFieldHandle:        UInt8 = 0
-private var nextFieldHandle:            UInt8 = 0
+private var tap_previousFieldHandle:        UInt8 = 0
+private var tap_nextFieldHandle:            UInt8 = 0
 
-private var manualPreviousButtonHandle: UInt8 = 0
-private var manualNextButtonHandle:     UInt8 = 0
+private var tap_manualPreviousButtonHandle: UInt8 = 0
+private var tap_manualNextButtonHandle:     UInt8 = 0
 
 public extension UIResponder {
     
@@ -28,87 +28,87 @@ public extension UIResponder {
     // MARK: Properties
     
     /// Previous field in navigation chain.
-    @IBOutlet public weak var previousField: UIResponder? {
+    @IBOutlet public weak var tap_previousField: UIResponder? {
         
         get {
             
-            return objc_getAssociatedObject(self, &previousFieldHandle) as? UIResponder
+            return objc_getAssociatedObject(self, &tap_previousFieldHandle) as? UIResponder
             
         } set {
             
-            let changed = (newValue != nil) || ((self.previousField != nil) && (newValue == nil))
+            let changed = (newValue != nil) || ((self.tap_previousField != nil) && (newValue == nil))
             
-            objc_setAssociatedObject(self, &previousFieldHandle, newValue, .OBJC_ASSOCIATION_ASSIGN)
+            objc_setAssociatedObject(self, &tap_previousFieldHandle, newValue, .OBJC_ASSOCIATION_ASSIGN)
             
             if changed {
                 
-                self.initToolbar()
+                self.tap_initToolbar()
             }
         }
     }
     
     /// Next field in navigation chain.
-    @IBOutlet public weak var nextField: UIResponder? {
+    @IBOutlet public weak var tap_nextField: UIResponder? {
         
         get {
             
-            return objc_getAssociatedObject(self, &nextFieldHandle) as? UIResponder
+            return objc_getAssociatedObject(self, &tap_nextFieldHandle) as? UIResponder
         }
         set {
             
-            let changed = (newValue != nil) || ((self.nextField != nil) && (newValue == nil))
+            let changed = (newValue != nil) || ((self.tap_nextField != nil) && (newValue == nil))
             
-            objc_setAssociatedObject(self, &nextFieldHandle, newValue, .OBJC_ASSOCIATION_ASSIGN)
+            objc_setAssociatedObject(self, &tap_nextFieldHandle, newValue, .OBJC_ASSOCIATION_ASSIGN)
             
             if changed {
                 
-                self.initToolbar()
+                self.tap_initToolbar()
             }
         }
     }
     
-    public var manualToolbarPreviousButtonHandler: TypeAlias.ArgumentlessClosure? {
+    public var tap_manualToolbarPreviousButtonHandler: TypeAlias.ArgumentlessClosure? {
         
         get {
             
-            return objc_getAssociatedObject(self, &manualPreviousButtonHandle) as? TypeAlias.ArgumentlessClosure
+            return objc_getAssociatedObject(self, &tap_manualPreviousButtonHandle) as? TypeAlias.ArgumentlessClosure
         }
         set {
             
-            objc_setAssociatedObject(self, &manualPreviousButtonHandle, newValue, .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &tap_manualPreviousButtonHandle, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
     
-    public var manualToolbarNextButtonHandler: TypeAlias.ArgumentlessClosure? {
+    public var tap_manualToolbarNextButtonHandler: TypeAlias.ArgumentlessClosure? {
         
         get {
             
-            return objc_getAssociatedObject(self, &manualNextButtonHandle) as? TypeAlias.ArgumentlessClosure
+            return objc_getAssociatedObject(self, &tap_manualNextButtonHandle) as? TypeAlias.ArgumentlessClosure
         }
         set {
             
-            objc_setAssociatedObject(self, &manualNextButtonHandle, newValue, .OBJC_ASSOCIATION_RETAIN)
+            objc_setAssociatedObject(self, &tap_manualNextButtonHandle, newValue, .OBJC_ASSOCIATION_RETAIN)
         }
     }
     
     // MARK: Methods
     
-    public func updateToolbarButtonsState() {
+    public func tap_updateToolbarButtonsState() {
         
         guard let toolbar = self.inputAccessoryView as? TapResponderChainInputView else { return }
         
-        toolbar.isPreviousButtonEnabled = self.previousField?.canBecomeFirstResponder ?? false
-        toolbar.isNextButtonEnabled = self.nextField?.canBecomeFirstResponder ?? false
+        toolbar.isPreviousButtonEnabled = self.tap_previousField?.canBecomeFirstResponder ?? false
+        toolbar.isNextButtonEnabled = self.tap_nextField?.canBecomeFirstResponder ?? false
     }
     
     // MARK: - Private -
     // MARK: Methods
     
-    private func initToolbar() {
+    private func tap_initToolbar() {
         
         guard self.inputAccessoryView == nil && self.responds(to: #selector(setter: UITextField.inputAccessoryView)) else {
             
-            self.updateToolbarButtonsState()
+            self.tap_updateToolbarButtonsState()
             return
         }
         
@@ -117,8 +117,8 @@ public extension UIResponder {
         let toolbar = TapResponderChainInputView(frame: toolbarFrame)
         
         toolbar.delegate = self
-        toolbar.isPreviousButtonEnabled = self.previousField?.canBecomeFirstResponder ?? false
-        toolbar.isNextButtonEnabled = self.nextField?.canBecomeFirstResponder ?? false
+        toolbar.isPreviousButtonEnabled = self.tap_previousField?.canBecomeFirstResponder ?? false
+        toolbar.isNextButtonEnabled = self.tap_nextField?.canBecomeFirstResponder ?? false
         
         self.perform(#selector(setter: UITextField.inputAccessoryView), with: toolbar)
     }
@@ -129,25 +129,25 @@ extension UIResponder: TapResponderChainInputViewDelegate {
     
     internal func responderChainInputViewPreviousButtonClicked(_ responderChainInputView: TapResponderChainInputView) {
         
-        if let nonnullPreviousClickHandler = self.manualToolbarPreviousButtonHandler {
+        if let nonnullPreviousClickHandler = self.tap_manualToolbarPreviousButtonHandler {
             
             nonnullPreviousClickHandler()
         }
         else {
             
-            self.previousField?.becomeFirstResponder()
+            self.tap_previousField?.becomeFirstResponder()
         }
     }
     
     internal func responderChainInputViewNextButtonClicked(_ responderChainInputView: TapResponderChainInputView) {
         
-        if let nonnullNextClickHandler = self.manualToolbarNextButtonHandler {
+        if let nonnullNextClickHandler = self.tap_manualToolbarNextButtonHandler {
             
             nonnullNextClickHandler()
         }
         else {
             
-            self.nextField?.becomeFirstResponder()
+            self.tap_nextField?.becomeFirstResponder()
         }
     }
 }

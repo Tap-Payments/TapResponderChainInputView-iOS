@@ -2,14 +2,14 @@
 //  TapResponderChainInputView.swift
 //  TapResponderChainInputView
 //
-//  Copyright © 2018 Tap Payments. All rights reserved.
+//  Copyright © 2019 Tap Payments. All rights reserved.
 //
 
-import struct CoreGraphics.CGBase.CGFloat
-import class TapNibView.TapNibInputView
-import class UIKit.UIButton.UIButton
-import class UIKit.UIDevice.UIDevice
-import protocol UIKit.UIDevice.UIInputViewAudioFeedback
+import struct	CoreGraphics.CGBase.CGFloat
+import class	TapNibView.TapNibInputView
+import class	UIKit.UIButton.UIButton
+import class	UIKit.UIDevice.UIDevice
+import protocol	UIKit.UIDevice.UIInputViewAudioFeedback
 
 /// Custom input accessory view with 2 buttons: previous and next.
 public class TapResponderChainInputView: TapNibInputView {
@@ -167,7 +167,7 @@ public class TapResponderChainInputView: TapNibInputView {
                 
                 if old.hasRTLLayout != new.hasRTLLayout {
                     
-                    strongSelf.applySemanticContentAttribute(new.hasRTLLayout ? .forceRightToLeft : .forceLeftToRight)
+                    strongSelf.tap_applySemanticContentAttribute(new.hasRTLLayout ? .forceRightToLeft : .forceLeftToRight)
                 }
             }
             
@@ -187,7 +187,7 @@ public class TapResponderChainInputView: TapNibInputView {
         
         if #available(iOS 9.0, *) {
             
-            self.applySemanticContentAttribute(settings.hasRTLLayout ? .forceRightToLeft : .forceLeftToRight)
+            self.tap_applySemanticContentAttribute(settings.hasRTLLayout ? .forceRightToLeft : .forceLeftToRight)
         }
     }
 }

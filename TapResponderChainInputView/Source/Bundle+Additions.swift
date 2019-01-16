@@ -2,7 +2,7 @@
 //  Bundle+Additions.swift
 //  TapResponderChainInputView
 //
-//  Copyright © 2018 Tap Payments. All rights reserved.
+//  Copyright © 2019 Tap Payments. All rights reserved.
 //
 
 internal extension Bundle {
@@ -12,7 +12,7 @@ internal extension Bundle {
     
     internal static let responderChainInputViewResourcesBundle: Bundle = {
         
-        guard let result = Bundle(for: TapResponderChainInputView.self).childBundle(named: Constants.resourcesBundleName) else {
+        guard let result = Bundle(for: TapResponderChainInputView.self).tap_childBundle(named: Constants.resourcesBundleName) else {
             
             fatalError("There is no \(Constants.resourcesBundleName) bundle.")
         }
