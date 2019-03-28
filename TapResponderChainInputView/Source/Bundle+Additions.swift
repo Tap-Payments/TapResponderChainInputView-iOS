@@ -10,7 +10,7 @@ internal extension Bundle {
     // MARK: - Internal -
     // MARK: Properties
     
-    internal static let responderChainInputViewResourcesBundle: Bundle = {
+    static let responderChainInputViewResourcesBundle: Bundle = {
         
         guard let result = Bundle(for: TapResponderChainInputView.self).tap_childBundle(named: Constants.resourcesBundleName) else {
             

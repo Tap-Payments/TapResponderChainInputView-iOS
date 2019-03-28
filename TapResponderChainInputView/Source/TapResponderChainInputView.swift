@@ -49,7 +49,7 @@ public class TapResponderChainInputView: TapNibInputView {
     
     deinit {
         
-        if let index = TapResponderChainInputView.aliveInstances.index(of: self) {
+        if let index = TapResponderChainInputView.aliveInstances.firstIndex(of: self) {
             
             TapResponderChainInputView.aliveInstances.remove(at: index)
         }

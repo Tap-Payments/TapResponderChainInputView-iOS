@@ -23,12 +23,12 @@ public extension UIResponder {
     
     // MARK: - Public -
     
-    public typealias PreparationsClosure = (@escaping TypeAlias.ArgumentlessClosure) -> Void
+    typealias PreparationsClosure = (@escaping TypeAlias.ArgumentlessClosure) -> Void
     
     // MARK: Properties
     
     /// Previous field in navigation chain.
-    @IBOutlet public weak var tap_previousField: UIResponder? {
+    @IBOutlet weak var tap_previousField: UIResponder? {
         
         get {
             
@@ -48,7 +48,7 @@ public extension UIResponder {
     }
     
     /// Next field in navigation chain.
-    @IBOutlet public weak var tap_nextField: UIResponder? {
+    @IBOutlet weak var tap_nextField: UIResponder? {
         
         get {
             
@@ -67,7 +67,7 @@ public extension UIResponder {
         }
     }
     
-    public var tap_manualToolbarPreviousButtonHandler: TypeAlias.ArgumentlessClosure? {
+    var tap_manualToolbarPreviousButtonHandler: TypeAlias.ArgumentlessClosure? {
         
         get {
             
@@ -79,7 +79,7 @@ public extension UIResponder {
         }
     }
     
-    public var tap_manualToolbarNextButtonHandler: TypeAlias.ArgumentlessClosure? {
+    var tap_manualToolbarNextButtonHandler: TypeAlias.ArgumentlessClosure? {
         
         get {
             
@@ -93,7 +93,7 @@ public extension UIResponder {
     
     // MARK: Methods
     
-    public func tap_updateToolbarButtonsState() {
+    func tap_updateToolbarButtonsState() {
         
         guard let toolbar = self.inputAccessoryView as? TapResponderChainInputView else { return }
         

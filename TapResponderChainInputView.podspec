@@ -1,15 +1,15 @@
-TapAdditionsKitDependencyVersion    = '>= 1.2'     unless defined? TapAdditionsKitDependencyVersion
-TapNibViewDependencyVersion         = '>= 1.0.2' unless defined? TapNibViewDependencyVersion
+TapAdditionsKitDependencyVersion    = '>= 1.3.1'	unless defined? TapAdditionsKitDependencyVersion
+TapNibViewDependencyVersion         = '>= 1.0.3'	unless defined? TapNibViewDependencyVersion
 
 Pod::Spec.new do |tapResponderChainInputView|
     
     tapResponderChainInputView.platform                 = :ios
     tapResponderChainInputView.ios.deployment_target    = '8.0'
-    tapResponderChainInputView.swift_version            = '4.2'
+    tapResponderChainInputView.swift_versions			= ['4.2', '5.0']
     tapResponderChainInputView.name                     = 'TapResponderChainInputView'
     tapResponderChainInputView.summary                  = 'Responder Chain Input View (with arrows to show above the keyboard).'
     tapResponderChainInputView.requires_arc             = true
-    tapResponderChainInputView.version                  = '1.1.2'
+    tapResponderChainInputView.version                  = '1.1.3'
     tapResponderChainInputView.license                  = { :type => 'MIT', :file => 'LICENSE' }
     tapResponderChainInputView.author                   = { 'Tap Payments' => 'hello@tap.company' }
     tapResponderChainInputView.homepage                 = 'https://github.com/Tap-Payments/TapResponderChainInputView-iOS'
